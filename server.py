@@ -46,9 +46,12 @@ def searchArtist(output):
 def searchSong(output):
     song = output['response']['song']['full_title']
     imag = output['response']['song']['song_art_image_thumbnail_url']
-    autor = output['response']['song']['album']['artist']['name']
-    album = output['response']['song']['album']['name']
-    autor = output['response']['song']['album']['artist']['name']
+    try:
+        album = output['response']['song']['album']['name']
+    except:
+        album = "Desconocido"
+    autor = output['response']['song']['primary_artist']['name']
+    id = output['response']['song']['id']
     try:
         for i in range(len(output['response']['song']['media'])):
             if 'native_uri' in output['response']['song']['media'][i].keys():
@@ -61,7 +64,7 @@ def searchSong(output):
     except:
         spotify_uri = "Unkwnow"
     spotify = "https://embed.spotify.com/?uri={}".format(spotify_uri)
-    solucion=[song, imag, spotify, autor, album]
+    solucion=[song, imag, spotify, autor, album, id]
     print(solucion)
     return solucion
 
