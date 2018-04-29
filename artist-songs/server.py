@@ -76,9 +76,11 @@ def getInicio():
 
 @app.route('/searchSongs', methods=['GET'])
 def getArtist():
+    num_songs = 15
     artist = request.args.get('artist', default = "*", type = str)
     artist_search = artist.replace(" ","+")
-    datos = buscadorApi('/search?q={}'.format(artist_search))
+    limit = request.args.get('limit', default = num_songs, type = int)
+    datos = buscadorApi('/search?q={}&per_page={}'.format(artist_search, limit))
     if datos == "Error":
         return render_template("error.html")
     message = searchArtist(datos)
