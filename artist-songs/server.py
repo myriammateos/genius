@@ -7,8 +7,8 @@ from flask import render_template, url_for, redirect
 
 def buscadorApi(url):
     web = "api.genius.com"
-    accestoken = 'PIXypyIkP4sT8Kvz8TC_0e3CcvoI9p_tIHW0LmwMbDhh3V8k_FmLq5K1nPBoiUXH'
-    headers = {'User-Agent': 'http-client', 'Authorization': 'Bearer {}'.format(accestoken)}
+    accesstoken = 'PIXypyIkP4sT8Kvz8TC_0e3CcvoI9p_tIHW0LmwMbDhh3V8k_FmLq5K1nPBoiUXH'
+    headers = {'User-Agent': 'http-client', 'Authorization': 'Bearer {}'.format(accesstoken)}
     print(web + url)
 
     conexion = http.client.HTTPSConnection(web)
