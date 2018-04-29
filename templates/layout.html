@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Medicamentos</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='plantilla.css') }}">
+</head>
+
+<body>
+<div class=content>
+  <div class="header">
+    <h2></h2>
+  </div>
+  <div class="menu">
+    <div class="menu_item">
+      <a href = "/" > <img src="static/home_icon.png" alt="Inicio" width="30" height="30"></a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="column side">
+      <h1>BUSCADOR</h1>
+         <form action="searchSongs">
+             Artista: <br>
+             <input type="text" name="artist" placeholder=" Introducir Artista" style="width:250px; height:30px; background-color:#D6DBDF; font-size:10pt; border-radius: 10px"> <br>
+             <br>
+             <input type=image src="static/search.png" width="150" >
+        </form>
+
+    </div>
+    <!--  Cuerpo de la página -->
+    <div class="column middle">
+      {% block body %}{% endblock %}
+    </div>
+  </div>
+
+<div class="footer">
+  <p>© Myriam Mateos 2018</p>
+  <p>myriam.mateos@outlook.es</p>
+</div>
+
+</div>
+</body>
+</html>
+
+
+

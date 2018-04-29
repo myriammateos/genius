@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block body %}
+<h1>Canciones de {{ artist_name }}</h1>
+   <ul>
+   {% for entry in content %}
+       <li> Cancion: {{ entry[0] }}</li>
+       <img src="{{ entry [1] }}" style="width:104px">
+   {% endfor %}
+   </ul>
+{% endblock %}
