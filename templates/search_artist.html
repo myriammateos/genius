@@ -5,6 +5,7 @@
    {% for entry in content %}
        <li> Cancion: {{ entry[0] }}</li>
        <img src="{{ entry [1] }}" style="width:104px">
+       <a href="{{ entry[2] }}">Enlace a la canción</a>
    {% endfor %}
    </ul>
 {% endblock %}

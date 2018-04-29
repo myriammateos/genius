@@ -35,16 +35,34 @@ def searchArtist(output):
     solucion = []
 
     for i in range(len(output['response']['hits'])):
-        if 'full_title' in output['response']['hits'][i]['result'].keys():
-            song = output['response']['hits'][i]['result']['full_title']
-        else:
-            song = "No especificado"
-        if 'header_image_url' in output['response']['hits'][i]['result'].keys():
-            imag = output['response']['hits'][i]['result']['header_image_url']
-        else:
-            imag = "No especificado"
-        pareja = [song, imag]
+        song = output['response']['hits'][i]['result']['full_title']
+        imag = output['response']['hits'][i]['result']['song_art_image_thumbnail_url']
+        link_song = output['response']['hits'][i]['result']['id']
+        link = 'http://127.0.0.1:8000/song?id={}'.format(link_song)
+        pareja = [song, imag, link]
         solucion.append(pareja)
+    return solucion
+
+def searchSong(output):
+    song = output['response']['song']['full_title']
+    imag = output['response']['song']['song_art_image_thumbnail_url']
+    autor = output['response']['song']['album']['artist']['name']
+    album = output['response']['song']['album']['name']
+    autor = output['response']['song']['album']['artist']['name']
+    try:
+        for i in range(len(output['response']['song']['media'])):
+            if 'native_uri' in output['response']['song']['media'][i].keys():
+                print(spotify_uri)
+                spotify_uri = output['response']['song']['media'][i]['native_uri']
+
+                break
+            else:
+                spotify_uri= "No disponible"
+    except:
+        spotify_uri = "Unkwnow"
+    spotify = "https://embed.spotify.com/?uri={}".format(spotify_uri)
+    solucion=[song, imag, spotify, autor, album]
+    print(solucion)
     return solucion
 
 app = Flask(__name__)
@@ -63,6 +81,16 @@ def getArtist():
     message = searchArtist(datos)
     print(message)
     return render_template("search_artist.html", content = message, artist_name = artist)
+
+@app.route('/song', methods=['GET'])
+def getSong():
+    song = request.args.get('id', default = "*", type = int)
+    datos = buscadorApi('/songs/{}'.format(song))
+    if datos == "Error":
+        return render_template("error.html")
+    message = searchSong(datos)
+    print(message)
+    return render_template("search_song.html", content = message, artist_name = message[0], spotify_link = message[2])
 
 @app.errorhandler(404)
 def page_not_found(e):
