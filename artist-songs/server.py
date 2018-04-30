@@ -9,7 +9,6 @@ def buscadorApi(url):
     web = "api.genius.com"
     accesstoken = 'PIXypyIkP4sT8Kvz8TC_0e3CcvoI9p_tIHW0LmwMbDhh3V8k_FmLq5K1nPBoiUXH'
     headers = {'User-Agent': 'http-client', 'Authorization': 'Bearer {}'.format(accesstoken)}
-    print(web + url)
 
     conexion = http.client.HTTPSConnection(web)
     try:
@@ -52,12 +51,11 @@ def searchSong(output):
         album = "Desconocido"
     autor = output['response']['song']['primary_artist']['name']
     id = output['response']['song']['id']
+    spotify_uri = "No disponible"
     try:
         for i in range(len(output['response']['song']['media'])):
             if 'native_uri' in output['response']['song']['media'][i].keys():
-                print(spotify_uri)
                 spotify_uri = output['response']['song']['media'][i]['native_uri']
-
                 break
             else:
                 spotify_uri= "No disponible"
@@ -65,7 +63,6 @@ def searchSong(output):
         spotify_uri = "Unkwnow"
     spotify = "https://embed.spotify.com/?uri={}".format(spotify_uri)
     solucion=[song, imag, spotify, autor, album, id]
-    print(solucion)
     return solucion
 
 app = Flask(__name__)
@@ -84,7 +81,6 @@ def getArtist():
     if datos == "Error":
         return render_template("error.html")
     message = searchArtist(datos)
-    print(message)
     return render_template("search_artist.html", content = message, artist_name = artist)
 
 @app.route('/song', methods=['GET'])
@@ -94,7 +90,6 @@ def getSong():
     if datos == "Error":
         return render_template("error.html")
     message = searchSong(datos)
-    print(message)
     return render_template("search_song.html", content = message, artist_name = message[0], spotify_link = message[2])
 
 @app.errorhandler(404)
